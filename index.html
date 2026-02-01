@@ -1,77 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Portfolio | Python & NLP Developer</title>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
 <style>
-body {
-    font-family: Arial, sans-serif;
-    background: #0a0e27;
-    color: #e0e6ed;
-    margin: 0;
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+    background:#0a0e27;
+    color:#e0e6ed;
+    overflow-x:hidden;
 }
-section {
-    padding: 80px 20px;
+#canvas-container{
+    position:fixed;
+    top:0;left:0;
+    width:100%;height:100%;
+    z-index:0;
+    pointer-events:none;
 }
-.container {
-    max-width: 1100px;
-    margin: auto;
+.content{position:relative;z-index:1}
+section{
+    min-height:100vh;
+    padding:80px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
-h1, h2 {
-    text-align: center;
-    color: #00d4ff;
+.container{max-width:1200px;width:100%;margin:auto}
+
+/* HERO */
+.hero{text-align:center}
+.hero h1{
+    font-size:clamp(2.5rem,5vw,4rem);
+    background:linear-gradient(135deg,#00d4ff,#7b61ff,#00d4ff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:gradientShift 4s ease infinite;
 }
-.skills-grid, .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
+@keyframes gradientShift{
+    0%,100%{background-position:0% 50%}
+    50%{background-position:100% 50%}
 }
-.card {
-    background: rgba(255,255,255,0.05);
-    padding: 25px;
-    border-radius: 12px;
+.hero p{color:#8b9dc3;margin-top:20px}
+
+/* TITLES */
+.section-title{
+    text-align:center;
+    font-size:clamp(2rem,4vw,3rem);
+    margin-bottom:60px;
+    background:linear-gradient(135deg,#00d4ff,#7b61ff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
 }
-.tech-tag {
-    display: inline-block;
-    background: rgba(0,212,255,0.15);
-    padding: 6px 12px;
-    margin: 5px;
-    border-radius: 20px;
-    font-size: 14px;
+
+/* SKILLS */
+.skills-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:30px;
 }
-a {
-    color: #00d4ff;
-    text-decoration: none;
+.skill-category{
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(123,97,255,.3);
+    border-radius:12px;
+    padding:30px;
+    transition:.4s;
+}
+.skill-category:hover{
+    transform:translateY(-10px);
+    box-shadow:0 20px 40px rgba(123,97,255,.3);
+}
+
+/* PROJECTS */
+.projects-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
+    gap:40px;
+}
+.project-card{
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(0,212,255,.2);
+    border-radius:16px;
+    padding:35px;
+    transition:.5s;
+    position:relative;
+    overflow:hidden;
+}
+.project-card:hover{
+    transform:translateY(-15px) rotateY(5deg);
+    box-shadow:0 25px 60px rgba(0,212,255,.3);
+}
+.tech-stack{display:flex;flex-wrap:wrap;gap:10px;margin-top:15px}
+.tech-tag{
+    padding:6px 14px;
+    border-radius:20px;
+    background:rgba(123,97,255,.2);
+    border:1px solid rgba(123,97,255,.3);
+    color:#7b61ff;
+    font-size:.85rem;
+}
+.project-link{
+    display:inline-block;
+    margin-top:20px;
+    padding:10px 20px;
+    border:1px solid #00d4ff;
+    color:#00d4ff;
+    border-radius:6px;
+    text-decoration:none;
+}
+
+/* CONTACT */
+.social-links{display:flex;gap:25px;justify-content:center}
+.social-link{
+    width:60px;height:60px;border-radius:50%;
+    border:2px solid rgba(0,212,255,.3);
+    display:flex;align-items:center;justify-content:center;
+    transition:.4s;
+}
+.social-link:hover{
+    transform:rotate(360deg);
+    box-shadow:0 10px 30px rgba(0,212,255,.4);
 }
 </style>
 </head>
 
 <body>
 
-<section>
+<div id="canvas-container"></div>
+
+<div class="content">
+
+<section class="hero">
 <div class="container">
-    <h1>Santhosh Kumar</h1>
-    <p style="text-align:center;">
-        Python Backend Developer | Flask | NLP | ATS Resume Analyzer
-    </p>
+<h1>Santhosh Kumar</h1>
+<p>Python Backend Developer | Flask | NLP | ATS Resume Analyzer</p>
 </div>
 </section>
 
 <section id="skills">
 <div class="container">
-<h2>Technical Skills</h2>
-
+<h2 class="section-title">Technical Skills</h2>
 <div class="skills-grid">
 
-<div class="card">
+<div class="skill-category">
 <h3>Programming</h3>
 <p>Python</p>
 <p>HTML / CSS</p>
 </div>
 
-<div class="card">
+<div class="skill-category">
 <h3>Backend & Resume Processing</h3>
 <p>Flask</p>
 <p>REST APIs (Basics)</p>
@@ -79,9 +160,9 @@ a {
 <p>File Handling</p>
 </div>
 
-<div class="card">
+<div class="skill-category">
 <h3>NLP & ATS Logic</h3>
-<p>Natural Language Processing (Basics)</p>
+<p>NLP Basics</p>
 <p>Text Preprocessing</p>
 <p>Keyword Extraction</p>
 <p>Resume Scoring Logic</p>
@@ -91,48 +172,91 @@ a {
 </div>
 </section>
 
+<!-- PROJECTS (ONLY ONE KEPT) -->
 <section id="projects">
 <div class="container">
-<h2>Projects</h2>
+<h2 class="section-title">Featured Projects</h2>
 
 <div class="projects-grid">
 
-<div class="card">
+<div class="project-card">
 <h3>ATS Resume Analyzer</h3>
 <p>
-Web application that analyzes resumes and provides ATS compatibility
-scores using NLP techniques. Built with Flask and Python.
+Production-ready web application that analyzes resumes using NLP techniques
+and provides ATS compatibility scores.
 </p>
 
-<div>
+<div class="tech-stack">
 <span class="tech-tag">Python</span>
 <span class="tech-tag">Flask</span>
 <span class="tech-tag">NLP</span>
 <span class="tech-tag">PDFPlumber</span>
-<span class="tech-tag">Web App</span>
 </div>
 
-<p style="margin-top:15px;">
-<a href="https://github.com/santhosh6-git/resume-analyzer-ats" target="_blank">
-GitHub Repository →
+<a class="project-link" href="https://github.com/santhosh6-git/resume-analyzer-ats" target="_blank">
+GitHub
 </a>
-</p>
 </div>
 
 </div>
 </div>
 </section>
 
-<section>
+<section id="contact">
 <div class="container">
-<h2>Contact</h2>
-<p style="text-align:center;">
-<a href="https://github.com/santhosh6-git">GitHub</a> |
-<a href="https://www.linkedin.com/in/santhosh-kumar-s-7b1060390">LinkedIn</a> |
-<a href="mailto:sank.linkedin1@gmail.com">Email</a>
-</p>
+<h2 class="section-title">Let's Connect</h2>
+<div class="social-links">
+<a class="social-link" href="https://github.com/santhosh6-git">⚡</a>
+<a class="social-link" href="https://www.linkedin.com/in/santhosh-kumar-s-7b1060390">💼</a>
+<a class="social-link" href="mailto:sank.linkedin1@gmail.com">✉️</a>
+</div>
 </div>
 </section>
+
+</div>
+
+<!-- THREE.JS ANIMATION (UNCHANGED) -->
+<script>
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,.1,1000);
+const renderer=new THREE.WebGLRenderer({alpha:true,antialias:true});
+renderer.setSize(window.innerWidth,window.innerHeight);
+document.getElementById("canvas-container").appendChild(renderer.domElement);
+camera.position.z=15;
+
+const particlesGeometry=new THREE.BufferGeometry();
+const count=150;
+const pos=new Float32Array(count*3);
+for(let i=0;i<count*3;i++)pos[i]=(Math.random()-.5)*50;
+particlesGeometry.setAttribute("position",new THREE.BufferAttribute(pos,3));
+const particlesMaterial=new THREE.PointsMaterial({size:.15,color:0x00d4ff,transparent:true,opacity:.6});
+const particles=new THREE.Points(particlesGeometry,particlesMaterial);
+scene.add(particles);
+
+const cloud=new THREE.Mesh(
+    new THREE.IcosahedronGeometry(3,1),
+    new THREE.MeshPhongMaterial({color:0x7b61ff,wireframe:true,opacity:.3,transparent:true})
+);
+scene.add(cloud);
+
+scene.add(new THREE.PointLight(0x00d4ff,1,100).position.set(10,10,10));
+scene.add(new THREE.PointLight(0x7b61ff,1,100).position.set(-10,-10,-10));
+
+function animate(){
+    requestAnimationFrame(animate);
+    particles.rotation.y+=.001;
+    cloud.rotation.x+=.003;
+    cloud.rotation.y+=.003;
+    renderer.render(scene,camera);
+}
+animate();
+
+window.addEventListener("resize",()=>{
+    camera.aspect=window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth,window.innerHeight);
+});
+</script>
 
 </body>
 </html>
